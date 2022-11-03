@@ -45,15 +45,14 @@ public class GestisciSportelli {
 
     }
 
-    public void aggiungerePersonaCoda(){
+    public void aggiungerePersonaCoda(int numeroSportello, String codiceFiscale, String nome, String cognome, String tipoServizio, String ticket){
+        String tipologiaServizio = sportelloArrayList.get(numeroSportello).getTipologiaServizio();
 
+        gestisciCode.push(tipologiaServizio, new Cliente(codiceFiscale, nome, cognome, tipoServizio, ticket));
     }
 
-    public boolean controlloSportello(){
-        return true;
+    public boolean controlloSportello(int numeroSportello){
+        return sportelloArrayList.get(numeroSportello).isSportelloLibero();
     }
 
-    public void stampaStatoCoda(){
-
-    }
 }
