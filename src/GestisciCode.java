@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class GestisciCode {
 
     BancoPosta bancoPosta = new BancoPosta();
@@ -46,6 +48,22 @@ public class GestisciCode {
         }
 
         return false;
+    }
+
+    public ArrayList<Cliente> popArray(String tipoCoda){
+        switch (tipoCoda){
+            case "banco_posta" -> {
+                return bancoPosta.clienteArrayList;
+            }
+            case "servizi_postale" -> {
+                return serviziPostale.clienteArrayList;
+            }
+            case "pagamento_bollettini" -> {
+                return pagamentoBollettini.clienteArrayList;
+            }
+        }
+
+        return null;
     }
 
 }

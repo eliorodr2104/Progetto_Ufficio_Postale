@@ -1,3 +1,5 @@
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
@@ -40,6 +42,20 @@ public class InterfacciaSportelli {
         return ultimoIndice;
     }
 
+    public void stampaCode(String tipoServizio){
+        ArrayList<Cliente> arrayTemp = g1.gestisciCode.popArray(tipoServizio);
+
+        if (!arrayTemp.isEmpty()){
+            for (int i = 0; i < arrayTemp.size(); i++){
+                System.out.println(i + ". Il codice fiscale è: " + arrayTemp.get(i).getCodiceFiscale() + ", Il nome è: " + arrayTemp.get(i).getNome() + " " + arrayTemp.get(i).getCognome());
+            }
+
+        }else
+            System.out.println("Non c'è nessuno nella coda");
+
+
+    }
+
     public void menu(){
         int numeroMassimoSportelli;
         Scanner s1 = new Scanner(System.in);
@@ -63,20 +79,21 @@ public class InterfacciaSportelli {
         System.out.println("Scegli l'operazione che desideri fare: \n" +
                 "1.Aggiorna lo stato del tuo sportello.\n" +
                 "2.Aggiungi una persona alla coda.\n" +
-                "3.Controlla lo stato del tuo sportello.");
+                "3.Controlla lo stato del tuo sportello. \n" +
+                "4.Stampare le persone nella coda.");
 
         do {
             try{
                 scelta = Integer.parseInt(s1.next());
 
-                if (scelta < 1 || scelta > 3)
+                if (scelta < 1 || scelta > 4)
                     System.out.println("Valore inserito non valido");
 
             }catch (NumberFormatException e){
                 scelta = -10;
                 System.out.println("Valore inserito non valido");
             }
-        }while (scelta < 1 || scelta > 3);
+        }while (scelta < 1 || scelta > 4);
 
         switch (scelta){
             case 1 ->{
@@ -175,6 +192,9 @@ public class InterfacciaSportelli {
                 }else
                     System.out.println("Sportello vuoto");
             }
+
+            case 4 -> stampaCode(g1.sportelloArrayList.get(indiceSportello -1).getTipologiaServizio());
+
         }
 
         System.out.println("Inserisci \"1\" per continuare o \"2\" per chiudere il programma");
@@ -183,7 +203,7 @@ public class InterfacciaSportelli {
             try{
                 scelta = Integer.parseInt(s1.next());
 
-                if (scelta < 1 || scelta > 3)
+                if (scelta < 1 || scelta > 2)
                     System.out.println("Valore inserito non valido");
 
             }catch (NumberFormatException e){

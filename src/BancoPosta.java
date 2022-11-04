@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 
 public class BancoPosta {
-    private final ArrayList<Cliente> clienteArrayList;
+    public final ArrayList<Cliente> clienteArrayList;
     private int testa, coda;
 
     /**
