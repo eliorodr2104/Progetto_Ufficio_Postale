@@ -1,16 +1,27 @@
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
+/**
+ * @author Eliomar Rodriguez
+ * @author Alessandro Duta
+ * @since 19.0.1
+ * @version %I%, %G%
+ * @version 1.0
+ * @see Main#main(String[]) istanza nella classe Main
+ * Descrizione: Classe InterfacciaSportelli, che gestisce l'interfaccia grafica di tutto il programma
+ */
 public class InterfacciaSportelli {
-
-    GestisciSportelli g1 = new GestisciSportelli();
+    GestisciSportelli g1 = new GestisciSportelli(); //Istanza della classe GestisciSportelli
 
     private int scelta, indiceSportello, contaBancoPosta, contaServiziPostale, contaPagamentoBollettini;
     private final String regexCodiceFiscale, regexNomeCognome;
     private String codiceFiscale, nome, cognome, tipoServizio, ticket;
 
+    /**
+     * Metodo costruttore()
+     * @see Main#main(String[])
+     */
     public InterfacciaSportelli(){
         this.scelta = 0;
         this.indiceSportello = 0;
@@ -18,20 +29,26 @@ public class InterfacciaSportelli {
         this.regexNomeCognome = "[a-zA-Z]*";
     }
 
+    /**
+     * Metodo stampaSportelli(), che stampa tutti gli sportelli
+     * @return la quantità di sportelli che ci sono
+     * @see InterfacciaSportelli#menu(), Si salva il risultato in una variabile temporanea
+     */
     public int stampaSportelli(){
         String[] tipologiaServizio;
         int ultimoIndice = 0;
 
         char oldChar, newChar;
 
+        //For che itera per tutta la lunghezza dell'array di sportelli
         for (int i = 0 ; i < g1.sportelloArrayList.size() ; i++){
-            tipologiaServizio = g1.sportelloArrayList.get(i).getTipologiaServizio().split("_");
+            tipologiaServizio = g1.sportelloArrayList.get(i).getTipologiaServizio().split("_"); //Split delle tipo di servizio di ogni sportello
 
-            oldChar = tipologiaServizio[0].charAt(0);
+            oldChar = tipologiaServizio[0].charAt(0); //Prende il primo carattere e lo salva su un char temporaneo
 
-            newChar = Character.toUpperCase(oldChar);
+            newChar = Character.toUpperCase(oldChar); //Salva il char vecchio convertito in maiuscolo su un altro char temporaneo
 
-            tipologiaServizio[0] = tipologiaServizio[0].replace(oldChar, newChar);
+            tipologiaServizio[0] = tipologiaServizio[0].replace(oldChar, newChar); //Fa lo scambio tra il char vecchio per quello nuovo
 
             System.out.println(i + 1 + ". Lavoratore: " + g1.sportelloArrayList.get(i).getNomeLavoratore() +
                     ", Tipo sportello: " + tipologiaServizio[0] + " " + tipologiaServizio[1] + ".");
@@ -42,8 +59,13 @@ public class InterfacciaSportelli {
         return ultimoIndice;
     }
 
+    /**
+     * Metodo stampaCode(), che stampa la coda della tipologia di lavoro dello sportello attuale
+     * @param tipoServizio il tipo di servizio che si sta utilizzando per stampare le code
+     * @see InterfacciaSportelli#menu() si utilizza nel case quatttro dello switch per la scelta dell'azione che desidera fare l'utente
+     */
     public void stampaCode(String tipoServizio){
-        ArrayList<Cliente> arrayTemp = g1.gestisciCode.popArray(tipoServizio);
+        ArrayList<Cliente> arrayTemp = g1.gestisciCode.popArrayList(tipoServizio);
 
         if (!arrayTemp.isEmpty()){
             for (int i = 0; i < arrayTemp.size(); i++){
@@ -52,13 +74,17 @@ public class InterfacciaSportelli {
 
         }else
             System.out.println("Non c'è nessuno nella coda");
-
-
     }
 
+    /**
+     * Metodo menu(), che gestisce tutta la classe InterfacciaSportelli e chiede all'utente cosa desidera fare
+     *                Nota: nei catch imposta la variabile a "-10" così non da nessun problema nel controllo
+     * @see Main#main(String[]) esegue il metodo per avviare il programma
+     * @see InterfacciaSportelli#menu() per scelta dell'utente si riavvia il metodo per continuare il programma
+     */
     public void menu(){
         int numeroMassimoSportelli;
-        Scanner s1 = new Scanner(System.in);
+        Scanner s1 = new Scanner(System.in); //Istanza della classe Scanner
 
         System.out.println("Seleziona il tuo sportello: ");
         numeroMassimoSportelli = stampaSportelli();
@@ -95,10 +121,10 @@ public class InterfacciaSportelli {
             }
         }while (scelta < 1 || scelta > 4);
 
+        //Controlla la variabile scelta e avvia il case richiesto dall'utente
         switch (scelta){
-            case 1 ->{
-                g1.aggiornaStatoSportello(indiceSportello - 1);
-            }
+            case 1 -> g1.aggiornaStatoSportello(indiceSportello - 1);
+
 
             case 2 ->{
                 System.out.println("Inserisci il codici fiscale della persona: ");
@@ -212,6 +238,7 @@ public class InterfacciaSportelli {
             }
         }while (scelta < 1 || scelta > 2);
 
+        //Continua il programma se l'utente inserisce uno
         if (scelta == 1)
             menu();
     }
